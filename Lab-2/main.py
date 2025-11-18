@@ -8,7 +8,7 @@ grid_size = int(input('Enter grid size (5 for default): ') or 5)
 edges_to_remove = int(input('Edges to remove: ') or 0)
 
 # -----------------------------
-# 1) Генерація графа (твоя Лаба №1)
+# 1) Graph generation (your Lab #1)
 # -----------------------------
 G_full = nx.grid_2d_graph(grid_size, grid_size)
 
@@ -70,7 +70,7 @@ class Agent:
         return []
 
 # -----------------------------
-# 3) Вибір старт/фініш
+# 3) Select start/goal
 # -----------------------------
 start = (0, 0)
 goal = (grid_size - 1, grid_size - 1)
@@ -80,16 +80,16 @@ agent = Agent(G_road, start, goal)
 path = agent.run()
 
 if not path:
-    print("Ціль недосяжна (хоча граф мав бути зв'язний).")
+    print("Goal unreachable")
 else:
-    print(f"Знайдений шлях довжини {len(path)}")
+    print(f"Found path of length {len(path)}")
 
 # -----------------------------
-# 4) Візуалізація кроків
+# 4) Step-by-step visualization
 # -----------------------------
 def draw_step(current_node, visited_nodes, path_so_far):
     plt.clf()
-    plt.title("Рух агента — покрокова візуалізація")
+    plt.title("Agent movement visualization")
     nx.draw_networkx_edges(G_road, pos, alpha=0.6)
     nx.draw_networkx_nodes(G_road, pos, nodelist=list(G_road.nodes()), node_color="lightgray", node_size=200, edgecolors="black")
     if visited_nodes:
@@ -100,9 +100,9 @@ def draw_step(current_node, visited_nodes, path_so_far):
         path_edges = list(zip(path_so_far[:-1], path_so_far[1:]))
         nx.draw_networkx_edges(G_road, pos, edgelist=path_edges, width=3)
 
-    plt.scatter([], [], c='green', label='Поточна позиція')
-    plt.scatter([], [], c='yellow', label='Відвідані вершини')
-    plt.scatter([], [], c='red', label='Ціль')
+    plt.scatter([], [], c='green', label='Current position')
+    plt.scatter([], [], c='yellow', label='Visited nodes')
+    plt.scatter([], [], c='red', label='Goal')
     plt.legend(loc='upper left')
     plt.axis('off')
     plt.pause(0.5)
@@ -126,4 +126,4 @@ else:
     draw_step(path[-1], visited, path_so_far)
     plt.show()
 
-print("Візуалізація завершена.")
+print("Visualization completed.")
